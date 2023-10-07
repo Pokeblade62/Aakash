@@ -14,150 +14,139 @@
         }
     </style>
 </head>
-<body>
+<body style="font-size: 14px;">
     <br>
     <h1 style="text-align: center;">DATA TABLE</h1>
     <br>
     <br>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+         <div class="col-md-6">
                 <h3 style="text-align: center;">T-2</h3>
-                <br>
-                <div class="scrollable-table">
+                <br> 
+                <div class="scrollable-table" style=" max-height: none;">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
+                                <th>Bank</th>
+                                <th>Count</th>
+                                <th>Amount</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                              
-                              </tr>
-
-                              <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                               
-                              </tr>
-
-                              <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                              
-                              </tr>
-                            <!-- Add table data here -->
+                            <% Allo.forEach(function(Allo){ %>
+                                <tr>
+                                    <% if(Allo.time == 'T-2'){%>
+                                        
+                                        <td><%=Allo.bank%></td>
+                                        <td><%=Allo.Count%></td>
+                                        <td><%=Allo.Amount%></td>
+                                    <%}%>
+                                 
+                                  
+                                                                  
+                                </tr>
+                        <% })%>
+                           
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> 
+
             <div class="col-md-6">
                 <h3 style="text-align: center;">T-1</h3>
-                <br>
-                <div class="scrollable-table">
+                <br> 
+                <div class="scrollable-table" style=" max-height: none;">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
+                                <th>Bank</th>
+                                <th>Count</th>
+                                <th>Amount</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                
-                              </tr>
-
-                              <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                               
-                              </tr>
-
-                              <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                
-                              </tr>
-                            <!-- Add table data here -->
+                            <% Allo.forEach(function(Allo){ %>
+                                <tr>
+                                    <% if(Allo.time == 'T-1'){%>
+                                        
+                                        <td><%=Allo.bank%></td>
+                                        <td><%=Allo.Count%></td>
+                                        <td><%=Allo.Amount%></td>
+                                    <%}%>
+                                 
+                                  
+                                                                  
+                                </tr>
+                        <% })%>
+                           
                         </tbody>
                     </table>
                 </div>
             </div>
             
-            <div class="col-md-12" style="margin-top: 50px;">
-                <h3 style="text-align: center;">Today</h3>
-                <br>
-                <div class="scrollable-table">
-                    <table class="table table-bordered">
-                        <thead>
+
+            <% const timePeriods = [
+            "00-04", "04-08", "08-10", "10-12", "12-14", "14-16",
+            "16-18", "18-20", "20-00"
+        ]; %>
+        
+        <div class="col-md-24" style="margin-top: 50px;">
+            <h3 style="text-align: center;">Today</h3>
+            <br>
+            <div class="scrollable-table" style=" max-height: none;">
+                <table class="table table-bordered" >
+                    <thead>
+                        <tr>
+                            <th>Bank</th>
+                            <% timePeriods.forEach(function(timePeriod) { %>
+                                <th><%= timePeriod %> Count</th>
+                                <th><%= timePeriod %> Amount</th>
+                            <% }) %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% var banksData = {}; %>
+                        <% Allo.forEach(function(Allo) { %>
+                            <% if (!banksData[Allo.bank]) { %>
+                                <% banksData[Allo.bank] = { Count: [], Amount: [] }; %>
+                            <% } %>
+                            <% banksData[Allo.bank].Count.push(Allo.Count); %>
+                            <% banksData[Allo.bank].Amount.push(Allo.Amount); %>
+                        <% }) %>
+                        <% Object.keys(banksData).forEach(function(bankName) { %>
                             <tr>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
-                                <th>Column 4</th>
-                                <th>Column 5</th>
-                                <th>Column 6</th>
-                                <th>Column 7</th>
-                                <th>Column 8</th>
-                                <th>Column 9</th>
-                                <th>Column 10</th>
+                                <td><%= bankName %></td>
+                                <% timePeriods.forEach(function(timePeriod) { %>
+                                    <td><%= banksData[bankName].Count[timePeriods.indexOf(timePeriod)] || '' %></td>
+                                    <td><%= banksData[bankName].Amount[timePeriods.indexOf(timePeriod)] || '' %></td>
+                                <% }) %>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                              </tr>
-
-                              <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                              </tr>
-
-                              <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                              </tr>
-                            <!-- Add table data here -->
-                        </tbody>
-                    </table>
-                </div>
+                        <% }) %>
+                    </tbody>
+                </table>
             </div>
+        </div>
+        
+        
+</div>
+
+            
         </div>
     </div>
 
+    <script>
+        function refreshPage() {
+    location.reload();
+}
+
+// Set a timeout to refresh the page every 5 minutes (300,000 milliseconds)
+setTimeout(refreshPage, 300000);
+
+
+    </script>
     <!-- Add Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
